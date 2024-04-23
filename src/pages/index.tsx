@@ -1,7 +1,7 @@
 import { GetStaticProps, NextPage } from "next";
 import Image from 'next/image';
 import Link from 'next/link';
-import { fetchUsers, User } from "../services/userServices"; 
+import { fetchUsers, User } from "../services/userServices";
 import img from '../images/defaultimage.jpg';
 
 interface HomeProps {
@@ -9,43 +9,40 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ users }) => {
-  const hoverShadowColor = 'rgb(99 102 241)';
-
   return (
-    <div className="container mx-auto px-4 py-8 md:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold mb-6 text-center ">User Information</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      <h1 className="text-4xl font-bold mb-8 text-center text-white-700">User Information</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {users.map((user) => (
           <div
             key={user.id}
-            className="bg-white dark:bg-gray-950 rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl"
-            style={{
-              transition: 'box-shadow 0.3s',
-              willChange: 'transform',
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.boxShadow = `0 0 0 3px ${hoverShadowColor}`}
-            onMouseLeave={(e) => e.currentTarget.style.boxShadow = ''}
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition duration-300 ease-in-out card"
           >
-            <div className="relative h-40 w-full">
+            <div className="relative h-48 w-full">
               <Image
                 alt={user.name}
                 className="h-full w-full object-cover"
-                height={400}
                 src={img}
-                width={400}
+                layout="fill"
               />
             </div>
-            <div className="p-4">
-              <h3 className="text-lg font-semibold">
+            <div className="p-6">
+              <h3 className="text-lg font-semibold mb-2">
                 <Link href={`/users/${user.id}`}>
-                <h1 className="hover:text-indigo-500">{user.name}</h1>
+                  <h1 className="hover:text-indigo-500 transition-colors duration-300">{user.name}</h1>
                 </Link>
               </h3>
-              <p className="text-gray-500 dark:text-gray-400">{user.email}</p>
+              <p className="text-gray-600 dark:text-gray-300">{user.email}</p>
             </div>
           </div>
         ))}
       </div>
+      <style jsx>{`
+        .card:hover {
+          box-shadow: 0 0 0 3px rgb(10, 102, 240); /* electric blue outline */
+        
+        }
+      `}</style>
     </div>
   );
 };
